@@ -1,5 +1,6 @@
 package com.rbnbproject.rbnbcloneproject.services;
 import com.rbnbproject.rbnbcloneproject.dao.ServiceLogementDao;
+import com.rbnbproject.rbnbcloneproject.exceptions.EntityExistException;
 import com.rbnbproject.rbnbcloneproject.exceptions.EntityNotFoundException;
 import com.rbnbproject.rbnbcloneproject.model.House;
 import com.rbnbproject.rbnbcloneproject.model.Piece;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -49,6 +51,12 @@ public class ServiceLogementServiceImpl implements ServiceLogementService {
         ServiceLogement serviceLogement=this.serviceLogementDao.findById(id).orElseThrow(
                 ()->new EntityNotFoundException("Le service est introuvable!!,veillez renseigner un service logement")
         );
+
+        List<ServiceLogement>serviceLogements=
+                house.getServiceLogements().stream()
+                                .filter(serviceLogement1 -> serviceLogement1.getService()==serviceLogement1.getService())
+                                        .toList();
+        if(!serviceLogements.isEmpty())throw new EntityExistException("Ce service de Logement existe déjà");
         house.getServiceLogements().add(serviceLogement);
     }
 }
