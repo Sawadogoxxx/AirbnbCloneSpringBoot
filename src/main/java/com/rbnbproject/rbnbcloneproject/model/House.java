@@ -34,6 +34,12 @@ public class House {
     )
     private List<Categorie> categories;
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "house"
+    )
+    private List<Reservation>reservations=new ArrayList<>();
     /**
      * Represente les commentaires associés a ce Logement
      */
