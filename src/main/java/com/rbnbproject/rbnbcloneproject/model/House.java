@@ -76,7 +76,7 @@ public class House {
     orphanRemoval = true)
     private List<Piece>pieces;
 
-    @Column(name = "nombre_max_personnes",nullable = false)
+    @Column(name = "nombre_max_personnes")
     private Integer nbmaxPerso;
 
     @Column(nullable = false)

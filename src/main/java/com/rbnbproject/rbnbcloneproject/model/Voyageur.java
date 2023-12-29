@@ -17,11 +17,11 @@ public class Voyageur {
     private Integer id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "le type de voyageur est recquis!!!")
+    @NotNull(message = "le type de voyageur est recquis!!!")
     private TypeVoyageur typeVoyageur;
 
     @NotNull(message = "le nombre de personnes est recquis!!!")
-    @Positive(message = "le nombre de personne doit etre positif")
+    //@Positive(message = "le nombre de personne doit etre positif")
     private Integer nbplace;
 
 }

@@ -1,6 +1,7 @@
 package com.rbnbproject.rbnbcloneproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,6 @@ import java.util.List;
 public class Reservation {
     @Id
     private String id;
-
-
     @NotNull(message = "la date de debut est recquise!!!")
     private Date debut;
 
@@ -28,10 +27,10 @@ public class Reservation {
     cascade = CascadeType.ALL)
     private List<Voyageur>voyageurs=new ArrayList<>();
 
-
     @ManyToOne(
             fetch =
     FetchType.LAZY,
     cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private House house;
 }

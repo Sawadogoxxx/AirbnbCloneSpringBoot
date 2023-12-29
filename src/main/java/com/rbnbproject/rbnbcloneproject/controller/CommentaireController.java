@@ -1,6 +1,4 @@
 package com.rbnbproject.rbnbcloneproject.controller;
-
-
 import com.rbnbproject.rbnbcloneproject.controller.api.ApiController;
 import com.rbnbproject.rbnbcloneproject.controller.api.AppRoute;
 import com.rbnbproject.rbnbcloneproject.model.Commentaire;
