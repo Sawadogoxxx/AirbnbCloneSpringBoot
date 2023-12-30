@@ -28,9 +28,7 @@ public class Reservation {
     private List<Voyageur>voyageurs=new ArrayList<>();
 
     @ManyToOne(
-            fetch =
-    FetchType.LAZY,
+            fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private House house;
 }

@@ -65,7 +65,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         House house=this.houseService.findEntite(houseId);
         reservation.setHouse(house);
-        Integer nbPersonne=reservation.getVoyageurs()
+        int nbPersonne=reservation.getVoyageurs()
                 .stream().mapToInt(Voyageur::getNbplace)
                 .sum();
         if(nbPersonne>house.getNbmaxPerso())

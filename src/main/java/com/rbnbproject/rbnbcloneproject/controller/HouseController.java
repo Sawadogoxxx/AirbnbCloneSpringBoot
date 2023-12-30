@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(AppRoute.root)
+@RequestMapping(AppRoute.root+"/house")
 public class HouseController implements ApiController<House,String> {
 
     private final HouseServiceImpl houseService;
@@ -24,7 +24,7 @@ public class HouseController implements ApiController<House,String> {
         this.houseService = houseService;
     }
 
-    @PostMapping("/addHouse")
+    @PostMapping("/add")
     @Override
     public ResponseEntity<?> addEntity(@Valid @RequestBody House house) {
         try {
@@ -34,23 +34,23 @@ public class HouseController implements ApiController<House,String> {
            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    @GetMapping("/getHouse/{id}")
+    @GetMapping("/{id}")
     @Override
     public ResponseEntity<House> findEntite(@PathVariable("id") String s) {
         House house=this.houseService.findEntite(s);
         return ResponseEntity.ok().body(house);
     }
 
-    @GetMapping("/houses")
+    @GetMapping("/all")
     @Override
     public List<House> findAll() {
         return this.houseService.findAll();
     }
 
-    @DeleteMapping("/deleteHouse/{id}")
+    @DeleteMapping("/delete/{id}")
     @Override
-    public ResponseEntity<String> deleteEntite(@PathVariable("id") String s) {
-        this.houseService.deleteEntite(s);
+    public ResponseEntity<String> deleteEntite(@PathVariable("id")String id) {
+        this.houseService.deleteEntite(id);
         return ResponseEntity.ok().body("Maison supprimé avec success!!!");
     }
 

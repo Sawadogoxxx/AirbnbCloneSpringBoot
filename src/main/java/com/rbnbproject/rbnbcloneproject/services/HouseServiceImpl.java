@@ -28,20 +28,24 @@ public class HouseServiceImpl implements IMetier<House, String> {
     }
     @Override
     public House addEntity(House house) {
-        if(Objects.isNull(house))
-            throw new EntityNotFoundException("Cette maison est invalide!!!");
-
+        if(Objects.isNull(house)) throw new EntityNotFoundException("Cette maison est invalide!!!");
+        //Recupération de la liste des Catégories de la maison a Enregistrer
         Set<Categorie>categories=house.getCategories();
+        //On parours Chaque Catégorie si La Catégorie n'existe pas dans Notre Liste de Catégorie en base de donnée
+        //Alors on crée Une Nouvelle Catégorie
+        //Sion on l'affecte A la Maison dans Le cas ou la Catégorie Existe  dans Notre base de donnée
         categories.forEach(categorie -> {
-            Optional<Categorie>optionalCategorie=this.categorieService
-                    .findByNomCategorie(categorie.getNomCategorie());
-            house.setCategories(new HashSet<>());
+            //Recherche de la catégorie dans Notre base de donnée
+            Optional<Categorie>optionalCategorie=this.categorieService.findByNomCategorie(categorie.getNomCategorie());
+            house.setCategories(new HashSet<>());//intilisatiion de la liste des Catégories
             if(optionalCategorie.isEmpty()){
+                //Si Il n'existe oas Alors il s'agit d"une Nouvcelle Catégorie
                 Categorie newCategorie=new Categorie();
                 newCategorie.setNomCategorie(categorie.getNomCategorie());
                 Categorie categorieSaved=this.categorieService.addEntity(newCategorie);
                 house.getCategories().add(categorieSaved);
             }else{
+                //Sinon cette Catégorie existe ,On l"affecte a Notre Maison
                 Categorie categorie1=optionalCategorie.get();
                 house.getCategories().add(categorie1);
             }
@@ -51,16 +55,14 @@ public class HouseServiceImpl implements IMetier<House, String> {
             Piece pieceSaved=pieceService.addEntity(piece);
             house.getPieces().add(pieceSaved);
         });
-        System.err.println(categories);
         house.setId(UUID.randomUUID().toString());
         return this.houseDao.save(house);
     }
     @Override
     public House findEntite(String id) {
         Optional<House>optionalHouse=this.houseDao.findById(id);
-        if(optionalHouse.isEmpty()){
-            throw new EntityNotFoundException("Aucune Maison correspond a été trouvé!!!");
-        }
+        log.info("Maison:  "+optionalHouse.get());
+        if(optionalHouse.isEmpty())throw new EntityNotFoundException("Aucune Maison correspondante a été trouvé!!!");
         return optionalHouse.get();
     }
 
@@ -69,9 +71,11 @@ public class HouseServiceImpl implements IMetier<House, String> {
         return this.houseDao.findAll();
     }
 
+    //Suppression d'une Maison
     @Override
-    public void deleteEntite(String string) {
-       this.houseDao.deleteById(string);
+    public void deleteEntite(String id) {
+        House house=this.findEntite(id);
+        this.houseDao.delete(house);
     }
 
     //Utiliser ModelMapper pour modifier l'Objet

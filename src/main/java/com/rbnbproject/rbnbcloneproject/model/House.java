@@ -1,4 +1,5 @@
 package com.rbnbproject.rbnbcloneproject.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -40,6 +41,7 @@ public class House {
             cascade = CascadeType.ALL,
             mappedBy = "house"
     )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Reservation>reservations=new ArrayList<>();
     /**
      * Represente les commentaires associés a ce Logement

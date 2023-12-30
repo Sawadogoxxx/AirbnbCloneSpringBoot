@@ -30,12 +30,12 @@ public class CategorieController implements ApiController<Categorie,Integer> {
     public ResponseEntity<?> addEntity(@Valid @RequestBody Categorie categorie) {
         return  ResponseEntity.status(HttpStatus.CREATED).body(this.categorieService.addEntity(categorie));
     }
+
     @PostMapping("/addcategorietoHouse/{house}/{catId}")
     public ResponseEntity<String> addCategorieToHouse(@PathVariable("house")String houseId,@PathVariable("catId")Integer id){
         this.categorieService.addCategorieToHouse(houseId,id);
         return ResponseEntity.ok().body("Catégorie ajouté a la maison avec success");
     }
-
     @Override
     @GetMapping("/categorie/{id}")
     public ResponseEntity<Categorie> findEntite(Integer id) {
@@ -46,12 +46,14 @@ public class CategorieController implements ApiController<Categorie,Integer> {
     public List<Categorie> findAll() {
         return this.categorieService.findAll();
     }
+
     @Override
     @DeleteMapping("/categorie/delete/{id}")
     public ResponseEntity<String> deleteEntite(@PathVariable("id") Integer id) {
         this.categorieService.deleteEntite(id);
         return ResponseEntity.ok().body("Catégorie Supprimé avec success");
     }
+
     @Override
     public ResponseEntity<Categorie> updateEntitie(Categorie categorie, Integer integer) {
         return null;
