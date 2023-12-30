@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = AppRoute.root)
+@RequestMapping(path = AppRoute.root+"/categorie")
 public class CategorieController implements ApiController<Categorie,Integer> {
 
     private final CategorieServiceImpl categorieService;
@@ -21,12 +21,12 @@ public class CategorieController implements ApiController<Categorie,Integer> {
     public CategorieController(CategorieServiceImpl categorieService) {
         this.categorieService = categorieService;
     }
-    @GetMapping("/categories/houses/{name}")
+    @GetMapping("/houses/{name}")
     public List<House>findHouseByCategories(@PathVariable("name")String nomCategorie){
          return  this.categorieService.findHousesByCategorie(nomCategorie);
     }
     @Override
-    @PostMapping("/categorie")
+    @PostMapping("/")
     public ResponseEntity<?> addEntity(@Valid @RequestBody Categorie categorie) {
         return  ResponseEntity.status(HttpStatus.CREATED).body(this.categorieService.addEntity(categorie));
     }
@@ -37,25 +37,26 @@ public class CategorieController implements ApiController<Categorie,Integer> {
         return ResponseEntity.ok().body("Catégorie ajouté a la maison avec success");
     }
     @Override
-    @GetMapping("/categorie/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Categorie> findEntite(Integer id) {
         return ResponseEntity.ok().body(this.categorieService.findEntite(id));
     }
     @Override
-    @GetMapping("/categories")
+    @GetMapping("/all")
     public List<Categorie> findAll() {
         return this.categorieService.findAll();
     }
 
     @Override
-    @DeleteMapping("/categorie/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEntite(@PathVariable("id") Integer id) {
         this.categorieService.deleteEntite(id);
         return ResponseEntity.ok().body("Catégorie Supprimé avec success");
     }
 
+    @PutMapping("/update/{catId}")
     @Override
-    public ResponseEntity<Categorie> updateEntitie(Categorie categorie, Integer integer) {
+    public ResponseEntity<Categorie> updateEntitie(@RequestBody Categorie categorie,@PathVariable("catId")Integer integer) {
         return null;
     }
 }

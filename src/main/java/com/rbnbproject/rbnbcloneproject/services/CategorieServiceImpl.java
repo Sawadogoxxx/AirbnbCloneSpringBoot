@@ -58,12 +58,12 @@ public class CategorieServiceImpl implements IMetier<Categorie,Integer>, Categor
     public void addCategorieToHouse(String houseId, Integer catId) {
         House house=this.houseDao.findById(houseId)
                 .orElseThrow(()->new EntityNotFoundException("Cette maison est introuvable!!!"));
-        Categorie categorie=this.categorieDao.findById(catId)
+                 Categorie categorie=this.categorieDao.findById(catId)
                 .orElseThrow(()->new EntityNotFoundException("La catégorie est invalide!!!"));
 
-       List<Categorie>categories=house.getCategories().stream().filter(
-                categorie1 ->categorie1.getNomCategorie().equals(categorie.getNomCategorie())
-        ).toList();
+       List<Categorie>categories=house.getCategories()
+               .stream().filter(categorie1 ->categorie1.getNomCategorie()
+                       .equals(categorie.getNomCategorie())).toList();
 
         if(!categories.isEmpty())throw new EntityExistException("Cette Catégorie existe déjà");
         house.getCategories().add(categorie);

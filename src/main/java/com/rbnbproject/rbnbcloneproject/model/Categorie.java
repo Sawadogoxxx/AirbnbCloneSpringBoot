@@ -3,14 +3,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
 /**
  * Represente la Categorie d'un Logement
  */
+@DynamicUpdate
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 public class Categorie {

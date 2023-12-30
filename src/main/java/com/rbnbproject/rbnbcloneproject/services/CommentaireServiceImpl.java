@@ -52,12 +52,11 @@ public class CommentaireServiceImpl implements CommentaireService {
     }
 
     @Override
-    public void addCommentaireToHouse(String houseId, Integer commentId) {
+    public void addCommentaireToHouse(String houseId,Commentaire commentaire) {
         House house=this.houseService.findEntite(houseId);
-        Commentaire commentaire=this.commentaireDao.findById(commentId)
-                .orElseThrow(()->new EntityNotFoundException("Le commentaire est invalide"));
+        Commentaire commentaire1=this.commentaireDao.save(commentaire);
 
-        house.getCommentaires().add(commentaire);
+        house.getCommentaires().add(commentaire1);
         commentaire.setHouse(house);
     }
 }
