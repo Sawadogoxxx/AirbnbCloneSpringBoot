@@ -8,9 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.*;
 
 @Builder
 @Data
@@ -32,7 +31,9 @@ public class House {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private List<Categorie> categories;
+
+    @NotEmpty(message = "Le maison doit etre dans Au moin Une catégorie")
+    private Set<Categorie> categories;
 
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -51,13 +52,15 @@ public class House {
     /**
      * Represente l'image de profil de ce logement
      */
+    @NotEmpty(message = "L'image de profil de la maison est Obligatoire!!!")
     private String profileImage;
     /**
      * Represente le Lieu du Logement
      */
     @ManyToOne(fetch =FetchType.EAGER,
             cascade = CascadeType.ALL)
-    private Lieu lieu;
+    @NotNull(message = "Le Lieu est Obligatoire!!!")
+    private Lieu lieu=new Lieu();
 
     /**
      * Represente les Service de ce logement
@@ -67,22 +70,26 @@ public class House {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
-    private List<ServiceLogement>serviceLogements=new ArrayList<>();
+    private Set<ServiceLogement>serviceLogements=new HashSet<>();
     /**
      * La Suppression d'une maison entraine la suppression des pièces associés
      */
     @OneToMany(fetch = FetchType.LAZY,
     cascade = CascadeType.ALL,
     orphanRemoval = true)
-    private List<Piece>pieces;
+    @NotEmpty(message = "la maison doit contenir au moin 1 pièce")
+    private Set<Piece>pieces;
 
     @Column(name = "nombre_max_personnes")
+    @NotNull(message = "veillez preciser le nombre maximun de Personnes")
     private Integer nbmaxPerso;
 
     @Column(nullable = false)
+    @NotNull(message = "veillez preciser le nombre de chambres")
     private Integer nbChambres;
 
     @Column(nullable = false)
+    @NotNull(message = "veillez preciser le nombre de Lits")
     private Integer nbLit;
 
     @Column(name = "nb_sale_bain",nullable = false)

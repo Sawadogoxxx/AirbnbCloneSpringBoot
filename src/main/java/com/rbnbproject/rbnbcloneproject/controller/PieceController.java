@@ -21,12 +21,6 @@ public class PieceController implements ApiController<Piece,Integer> {
     }
 
 
-    @PostMapping("/addToHouse/{houseId}/{pieceId}")
-    public ResponseEntity<String> addPieceToHouse(@PathVariable("houseId")String houseId,@PathVariable("pieceId")Integer pieceId){
-        this.pieceService.addPieceToHouse(houseId,pieceId);
-        return ResponseEntity.ok().body("Piece ajouté a la maison avec Success!!!");
-    }
-
     @Override
     @PostMapping("/piece")
     public ResponseEntity<?> addEntity(@RequestBody Piece piece) {

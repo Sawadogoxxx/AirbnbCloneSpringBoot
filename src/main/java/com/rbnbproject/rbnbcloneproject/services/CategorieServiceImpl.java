@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -67,4 +69,16 @@ public class CategorieServiceImpl implements IMetier<Categorie,Integer>, Categor
         house.getCategories().add(categorie);
         categorie.getHouses().add(house);
     }
+
+    @Override
+    public List<House> findHousesByCategorie(String catName) {
+        return this.categorieDao.findHouseByCategorie(catName);
+    }
+
+    @Override
+    public Optional<Categorie> findByNomCategorie(String nomCategorie) {
+        return this.categorieDao.findByNomCategorie(nomCategorie);
+    }
+
+
 }

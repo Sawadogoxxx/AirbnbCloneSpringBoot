@@ -14,11 +14,10 @@ import java.util.List;
 public class PieceServiceImpl implements PieceService {
 
     private PieceDao pieceDao;
-    private HouseServiceImpl houseService;
 
-    public PieceServiceImpl(PieceDao pieceDao, HouseServiceImpl houseService) {
+
+    public PieceServiceImpl(PieceDao pieceDao) {
         this.pieceDao = pieceDao;
-        this.houseService = houseService;
     }
 
     @Override
@@ -50,12 +49,5 @@ public class PieceServiceImpl implements PieceService {
 
     }
 
-    @Override
-    public void addPieceToHouse(String houseId, Integer idPiece) {
-        House house=this.houseService.findEntite(houseId);
-        Piece piece=this.pieceDao.findById(idPiece).orElseThrow(
-                ()->new EntityNotFoundException("La pièce est introuvable!!,veillez renseigner une pièce")
-        );
-        house.getPieces().add(piece);
-    }
+
 }
