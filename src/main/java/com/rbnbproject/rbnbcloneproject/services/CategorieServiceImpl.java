@@ -6,6 +6,8 @@ import com.rbnbproject.rbnbcloneproject.exceptions.EntityExistException;
 import com.rbnbproject.rbnbcloneproject.exceptions.EntityNotFoundException;
 import com.rbnbproject.rbnbcloneproject.model.Categorie;
 import com.rbnbproject.rbnbcloneproject.model.House;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,28 +17,30 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class CategorieServiceImpl implements IMetier<Categorie,Integer>, CategorieService{
 
     private final CategorieDao categorieDao;
     private final HouseDao houseDao;
 
-    public CategorieServiceImpl(CategorieDao categorieDao, HouseDao houseDao) {
-        this.categorieDao = categorieDao;
-        this.houseDao = houseDao;
-    }
-
     @Override
     public Categorie addEntity(Categorie categorie) {
-        if(Objects.isNull(categorie))
+        if(Objects.isNull(categorie)){
+            log.info("La catégorie est nulle ");
             throw new EntityNotFoundException("Cette catégorie est invalide");
+        }
+        log.info("Catégorie créee Avec Success");
         return this.categorieDao.save(categorie);
     }
 
     @Override
     public Categorie findEntite(Integer id) {
-        return this.categorieDao.findById(id).orElseThrow(() -> new EntityNotFoundException("Cette Categorie est introuvable"));
+        log.info("Recherche d'une catégorie");
+        return this.categorieDao.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cette Categorie est introuvable"));
     }
     @Override
     public List<Categorie> findAll() {

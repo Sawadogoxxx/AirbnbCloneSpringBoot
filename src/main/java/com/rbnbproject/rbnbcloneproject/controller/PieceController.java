@@ -4,6 +4,7 @@ import com.rbnbproject.rbnbcloneproject.controller.api.ApiController;
 import com.rbnbproject.rbnbcloneproject.controller.api.AppRoute;
 import com.rbnbproject.rbnbcloneproject.model.Piece;
 import com.rbnbproject.rbnbcloneproject.services.PieceServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = AppRoute.root)
+@RequestMapping("/pieces")
+@RequiredArgsConstructor
 public class PieceController implements ApiController<Piece,Integer> {
 
     private final PieceServiceImpl pieceService;
-
-    public PieceController(PieceServiceImpl pieceService) {
-        this.pieceService = pieceService;
-    }
-
 
     @Override
     @PostMapping("/piece")

@@ -5,6 +5,7 @@ import com.rbnbproject.rbnbcloneproject.exceptions.EntityNotFoundException;
 import com.rbnbproject.rbnbcloneproject.model.Categorie;
 import com.rbnbproject.rbnbcloneproject.model.House;
 import com.rbnbproject.rbnbcloneproject.model.Piece;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,19 +14,14 @@ import java.util.*;
 
 @Slf4j
 @Transactional
+@AllArgsConstructor
 @Service
-public class HouseServiceImpl implements IMetier<House, String> {
+public class HouseServiceImpl implements HouseService {
 
     private final HouseDao houseDao;
     private final CategorieServiceImpl categorieService;
     private final PieceServiceImpl pieceService;
 
-    public HouseServiceImpl(HouseDao houseDao, CategorieServiceImpl categorieService,
-                            PieceServiceImpl pieceService) {
-        this.houseDao = houseDao;
-        this.categorieService = categorieService;
-        this.pieceService = pieceService;
-    }
     @Override
     public House addEntity(House house) {
         if(Objects.isNull(house)) throw new EntityNotFoundException("Cette maison est invalide!!!");
@@ -61,7 +57,6 @@ public class HouseServiceImpl implements IMetier<House, String> {
     @Override
     public House findEntite(String id) {
         Optional<House>optionalHouse=this.houseDao.findById(id);
-        log.info("Maison:  "+optionalHouse.get());
         if(optionalHouse.isEmpty())throw new EntityNotFoundException("Aucune Maison correspondante a été trouvé!!!");
         return optionalHouse.get();
     }
@@ -82,5 +77,15 @@ public class HouseServiceImpl implements IMetier<House, String> {
     @Override
     public void updateEntitie(House house, String string) {
 
+    }
+
+    @Override
+    public House findHouseByName(String houseName) {
+        return this.houseDao.findByNom(houseName);
+    }
+
+    @Override
+    public List<House> findHousesByPrice(Double price) {
+        return this.houseDao.findByPrixNuit(price);
     }
 }

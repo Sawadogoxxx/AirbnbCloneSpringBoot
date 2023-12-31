@@ -7,6 +7,7 @@ import com.rbnbproject.rbnbcloneproject.model.House;
 import com.rbnbproject.rbnbcloneproject.services.CommentaireServiceImpl;
 import com.rbnbproject.rbnbcloneproject.services.HouseServiceImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(AppRoute.root+"/comment")
+@RequestMapping("/comment")
+@RequiredArgsConstructor
 public class CommentaireController implements ApiController<Commentaire,Integer> {
 
     private final CommentaireServiceImpl commentaireService;
     private HouseServiceImpl houseServicel;
 
-    public CommentaireController(CommentaireServiceImpl commentaireService, HouseServiceImpl houseServicel) {
-        this.commentaireService = commentaireService;
-        this.houseServicel = houseServicel;
-    }
 
     @PostMapping("/add/{houseId}")
     public ResponseEntity<String> addCommentToHouse(@PathVariable("houseId")String houseId,@RequestBody Commentaire commentaire){
@@ -41,6 +39,7 @@ public class CommentaireController implements ApiController<Commentaire,Integer>
     public ResponseEntity<Commentaire> findEntite(@PathVariable("id") Integer id) {
         return ResponseEntity.ok().body(this.commentaireService.findEntite(id));
     }
+
     @Override
     @GetMapping("/all")
     public List<Commentaire> findAll() {

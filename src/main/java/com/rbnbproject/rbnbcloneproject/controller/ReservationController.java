@@ -4,20 +4,19 @@ import com.rbnbproject.rbnbcloneproject.controller.api.ApiController;
 import com.rbnbproject.rbnbcloneproject.controller.api.AppRoute;
 import com.rbnbproject.rbnbcloneproject.model.Reservation;
 import com.rbnbproject.rbnbcloneproject.services.ReservationServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = AppRoute.root)
+@RequestMapping(path = "/reservation")
+@RequiredArgsConstructor
 public class ReservationController implements ApiController<Reservation,String> {
 
     private final ReservationServiceImpl reservationService;
 
-    public ReservationController(ReservationServiceImpl reservationService) {
-        this.reservationService = reservationService;
-    }
 
     @PostMapping("/reservation/{houseId}")
     public ResponseEntity<?> addEntity(@RequestBody Reservation reservation,@PathVariable("houseId")String houseId) {

@@ -6,6 +6,7 @@ import com.rbnbproject.rbnbcloneproject.model.Categorie;
 import com.rbnbproject.rbnbcloneproject.model.House;
 import com.rbnbproject.rbnbcloneproject.services.CategorieServiceImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = AppRoute.root+"/categorie")
+@RequestMapping(path ="/categorie")
+@RequiredArgsConstructor
 public class CategorieController implements ApiController<Categorie,Integer> {
 
     private final CategorieServiceImpl categorieService;
 
-    public CategorieController(CategorieServiceImpl categorieService) {
-        this.categorieService = categorieService;
-    }
     @GetMapping("/houses/{name}")
     public List<House>findHouseByCategories(@PathVariable("name")String nomCategorie){
          return  this.categorieService.findHousesByCategorie(nomCategorie);
