@@ -1,6 +1,4 @@
 package com.rbnbproject.rbnbcloneproject.controller;
-
-import com.rbnbproject.rbnbcloneproject.controller.api.AppRoute;
 import com.rbnbproject.rbnbcloneproject.services.ServiceLogementServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

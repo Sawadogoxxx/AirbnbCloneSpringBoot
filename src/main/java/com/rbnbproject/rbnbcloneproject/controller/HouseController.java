@@ -1,7 +1,6 @@
 package com.rbnbproject.rbnbcloneproject.controller;
 
 import com.rbnbproject.rbnbcloneproject.controller.api.ApiController;
-import com.rbnbproject.rbnbcloneproject.controller.api.AppRoute;
 import com.rbnbproject.rbnbcloneproject.exceptions.EntityNotFoundException;
 import com.rbnbproject.rbnbcloneproject.model.House;
 import com.rbnbproject.rbnbcloneproject.services.HouseServiceImpl;
